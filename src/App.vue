@@ -39,15 +39,15 @@ function toggleFiltros(tipo) {
   if (tipo === "intensidad") {
     showFiltros.value = !showFiltros.value;
     showTime.value = false;
-    // Reiniciar filtro de tiempo cuando se selecciona intensidad
-    if (showFiltros.value) {
+  
+  if (showFiltros.value) {
       filtroTiempo.value = "";
     }
   } else if (tipo === "tiempo") {
     showTime.value = !showTime.value;
     showFiltros.value = false;
-    // Reiniciar filtro de intensidad cuando se selecciona tiempo
-    if (showTime.value) {
+   
+  if (showTime.value) {
       filtroIntensidad.value = "";
     }
   }
@@ -80,7 +80,7 @@ function setTiempo(value) {
 }
 
 function openAddCardModal() {
-  resetForm(); // Limpia el formulario antes de abrir el modal
+  resetForm();
   showModal.value = true;
 }
 
@@ -495,21 +495,21 @@ footer {
   }
   .modal {
     height: 80%;
-    width: 80%; /* Ajusta el ancho a casi toda la pantalla */
-    top: 10%; /* Baja un poco el modal para dejar margen arriba */
-    left: 5%; /* Centra horizontalmente */
-    padding: 10px; /* Reduce el padding en pantallas pequeñas */
+    width: 80%; 
+    top: 10%;
+    left: 5%;
+    padding: 10px;
   }
   .intensidad,
   .tiempo,
   .btn-modal {
-    flex-direction: column; /* Cambia a columna para evitar que se superpongan */
-    gap: 10px; /* Ajusta el espacio entre elementos */
+    flex-direction: column;
+    gap: 10px;
   }
   .intensidad button,
   .tiempo select,
   .btn-modal button {
-    width: 100%; /* Haz que los botones y el select ocupen todo el ancho del modal */
+    width: 100%;
   }
   .portada{
     justify-content: center;
