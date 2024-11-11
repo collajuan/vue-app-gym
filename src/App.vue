@@ -56,10 +56,12 @@ function toggleFiltros(tipo) {
 function loadCards() {
   const storedData = localStorage.getItem("ejercicio");
   return storedData ? JSON.parse(storedData) : [];
+  //Fetch inicial a la API
 }
 
 function saveCards(newCards) {
   localStorage.setItem("ejercicio", JSON.stringify(newCards));
+  //Hacer un PUT en la API
 }
 
 const cards = ref(loadCards());
@@ -186,6 +188,7 @@ const filteredCards = computed(() => {
         </div>
       </div>
     </div>
+
     <h1>FitMotion</h1>
     <div class="container">
       <div class="portada">
@@ -213,12 +216,12 @@ const filteredCards = computed(() => {
     </div>
 
     <div class="cards-container">
-
+    <!-- !Aqui empieza la Card -->
       <div v-for="card in filteredCards" :key="card.id" class="cards">
         <div class="card">
           <img
-            src="https://canalsalud.imq.es/hubfs/Imported_Blog_Media/crossfit-entrenamiento-1.jpg"
-            alt=""
+          src="https://canalsalud.imq.es/hubfs/Imported_Blog_Media/crossfit-entrenamiento-1.jpg"
+          alt=""
           />
           
           <p class="card-titulo">{{ card.ejercicio }}</p>
@@ -231,7 +234,8 @@ const filteredCards = computed(() => {
             <button @click="editCard(card)" class="editar">Editar</button>
             <button @click="deleteCard(card)" class="eliminar">Eliminar</button>
           </div>
-        
+    <!-- !Aqui Termina la Card -->
+          
         </div>
       </div>
     </div>
