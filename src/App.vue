@@ -56,6 +56,8 @@ function toggleFiltros(tipo) {
 
 function loadCards() {
   const storedData = localStorage.getItem("ejercicio");
+  // console.log(storedData);
+  
   return storedData ? JSON.parse(storedData) : [];
   //Fetch inicial a la API
 }
@@ -66,6 +68,8 @@ function saveCards(newCards) {
 }
 
 const cards = ref(loadCards());
+// console.log(cards.value);
+// console.log(cards.value[0]);
 
 watch(cards, saveCards, { deep: true });
 
@@ -128,9 +132,10 @@ function editCard (card) {
   tiempo.value = card.tiempo
 };
 
-function deleteCard(value) {
-  alert("Vas a borrar este ejercicio"),
-  cards.value.splice(value, 1)
+function deleteCard(cardId) {
+  const indexToRemove = cards.value.findIndex(obj => obj.id === cardId)
+  alert(`Vas a borrar este ejercicio ${cardId}`)  
+  cards.value.splice(indexToRemove, 1)
 }
 
 function resetForm() {

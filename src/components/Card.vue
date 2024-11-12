@@ -3,7 +3,9 @@
     props: {
       card: Object,
     },
-  };
+    emits: ['edit', 'delete']
+  }
+
 </script>
 
 <template>
@@ -19,7 +21,7 @@
             </div>
             <div class="card-btn">
                 <button @click="$emit('edit', card)" class="editar">Editar</button>
-                <button @click="$emit('delete', card)" class="eliminar">Eliminar</button>
+                <button @click="$emit('delete', card.id)" class="eliminar">Eliminar</button>
             </div>
         </div>
     </div>
