@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, computed } from "vue";
+import Card from "./components/Card.vue";
 
 const ejercicio = ref("");
 const descripcion = ref("");
@@ -216,28 +217,8 @@ const filteredCards = computed(() => {
     </div>
 
     <div class="cards-container">
-    <!-- !Aqui empieza la Card -->
-      <div v-for="card in filteredCards" :key="card.id" class="cards">
-        <div class="card">
-          <img
-          src="https://canalsalud.imq.es/hubfs/Imported_Blog_Media/crossfit-entrenamiento-1.jpg"
-          alt=""
-          />
-          
-          <p class="card-titulo">{{ card.ejercicio }}</p>
-          <p class="card-descripcion">{{ card.descripcion }}</p>
-          <div class="card-filtros">
-            <p :class="`${card.intensidad.toLowerCase()}`">Intensidad: {{ card.intensidad }}</p>
-            <p class="card-tiempo">{{ card.tiempo }}</p>
-          </div>
-          <div class="card-btn">
-            <button @click="editCard(card)" class="editar">Editar</button>
-            <button @click="deleteCard(card)" class="eliminar">Eliminar</button>
-          </div>
-    <!-- !Aqui Termina la Card -->
-          
-        </div>
-      </div>
+      <Card v-for="card in filteredCards" :key="card.id" :card="card" @edit="editCard" @delete="deleteCard" />   
+    
     </div>
     <footer :class="{ marginTop: isCardsEmpty }">
       <h4>FitMotion&#169;​</h4>
@@ -247,7 +228,7 @@ const filteredCards = computed(() => {
   </main>
 </template>
 
-<style scoped>
+<style >
 main {
   height: 100vh;
   display: flex;
