@@ -42,12 +42,7 @@ function apiPost(newCard) {
   });
 }
 
-function apiEdit(card) {
-  // https://json-app-1d643-default-rtdb.europe-west1.firebasedatabase.app/gym-app/-OB_9Xmd6p9xvtV7LAN9.json
-  console.log(card);
-  console.log(jsonId);
-  console.log(jsonId[card.id]);
-  
+function apiEdit(card) { 
   fetch(apiUrl + `/${jsonId[card.id]}.json`,
         {
             method: 'PATCH',
@@ -58,6 +53,18 @@ function apiEdit(card) {
     .then(res => console.log(res))    
 }
 
+function apiDelete(cardId) {
+  console.log(jsonId[cardId]);
+  console.log(apiUrl + `/${jsonId[cardId]}.json`);
+  
+  fetch(apiUrl + `/${jsonId[cardId]}.json`,
+        {
+            method: 'DELETE'
+        }
+    )
+    .then(res => res.json())
+    .then(res => console.log(res))  
+}
 
 const showFiltros = ref(false);
 const showTime = ref(false);
@@ -190,6 +197,7 @@ function deleteCard(card) {
   const indexToRemove = cards.value.findIndex(obj => obj.id === card.id)
   alert(`Vas a borrar ejercicio: ${card.ejercicio}`)  
   cards.value.splice(indexToRemove, 1)
+  apiDelete(card.id)
 }
 
 function resetForm() {
