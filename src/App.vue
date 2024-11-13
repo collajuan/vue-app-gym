@@ -8,6 +8,53 @@ const intensidad = ref("");
 const tiempo = ref("");
 const filtroTiempo = ref("");
 const filtroIntensidad = ref("")
+const apiUrl = 'https://json-app-1d643-default-rtdb.europe-west1.firebasedatabase.app/gym-app'
+const jsonId = {}
+
+function apiGet() {
+      try {
+        fetch(apiUrl+'.json')
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            // this.friends = data;
+          });
+      } catch (error) {
+        console.log(error);
+      }
+}
+
+apiGet()
+
+function apiPost(newCard) {
+  fetch(apiUrl + '.json', {
+    method: 'POST',
+    body: JSON.stringify(newCard)
+  })
+  .then((response) => response.json())
+          .then((data) => {
+          // console.log(data);
+          jsonId[newCard.id] = data.name
+          console.log(jsonId);         
+  });
+}
+
+function apiEdit(card) {
+  // https://json-app-1d643-default-rtdb.europe-west1.firebasedatabase.app/gym-app/-OB_9Xmd6p9xvtV7LAN9.json
+  console.log(card);
+  console.log(jsonId);
+  console.log(jsonId[card.id]);
+  
+  fetch(apiUrl + `/${jsonId[card.id]}.json`,
+        {
+            method: 'PATCH',
+            body: JSON.stringify(card)
+        }
+    )
+    .then(res => res.json())
+    .then(res => console.log(res))    
+}
+
 
 const showFiltros = ref(false);
 const showTime = ref(false);
@@ -64,7 +111,6 @@ function loadCards() {
 
 function saveCards(newCards) {
   localStorage.setItem("ejercicio", JSON.stringify(newCards));
-  //Hacer un PUT en la API
 }
 
 const cards = ref(loadCards());
@@ -107,17 +153,22 @@ function addCard() {
         intensidad: intensidad.value,
         tiempo: tiempo.value,
       };
+      apiEdit(cards.value[cardIndex])
       showModal.value = false;
       resetForm()
     }
   } else {
-      cards.value.push({
+      const newCard = {
       id: Math.floor(Math.random() * 1000000),
       ejercicio: ejercicio.value,
       descripcion: descripcion.value,
       intensidad: intensidad.value,
       tiempo: tiempo.value,
-  });
+      }
+//En el array controlado por Local Storage
+      cards.value.push(newCard);
+//En la API
+      apiPost(newCard)
       showModal.value = false;
       resetForm()
 }
@@ -132,9 +183,9 @@ function editCard (card) {
   tiempo.value = card.tiempo
 };
 
-function deleteCard(cardId) {
-  const indexToRemove = cards.value.findIndex(obj => obj.id === cardId)
-  alert(`Vas a borrar este ejercicio ${cardId}`)  
+function deleteCard(card) {
+  const indexToRemove = cards.value.findIndex(obj => obj.id === card.id)
+  alert(`Vas a borrar ejercicio: ${card.ejercicio}`)  
   cards.value.splice(indexToRemove, 1)
 }
 
@@ -223,7 +274,6 @@ const filteredCards = computed(() => {
 
     <div class="cards-container">
       <Card v-for="card in filteredCards" :key="card.id" :card="card" @edit="editCard" @delete="deleteCard" />   
-    
     </div>
     <footer :class="{ marginTop: isCardsEmpty }">
       <h4>FitMotion&#169;​</h4>
