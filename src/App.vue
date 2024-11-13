@@ -10,18 +10,21 @@ const filtroTiempo = ref("");
 const filtroIntensidad = ref("")
 const apiUrl = 'https://json-app-1d643-default-rtdb.europe-west1.firebasedatabase.app/gym-app'
 const jsonId = {}
-
+//Se obtiene actividades desde FireBase y se inicia jsonId
 function apiGet() {
       try {
         fetch(apiUrl+'.json')
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-            // this.friends = data;
+            for(let obj in data) {
+              //Inicializar jsonId
+              jsonId[data[obj].id]=obj
+            }
+            console.log(jsonId);            
           });
       } catch (error) {
         console.log(error);
-      }
+      }      
 }
 
 apiGet()
