@@ -1,4 +1,4 @@
-## [FitMotion - Fitness Routine Tracker](https://vue-app-gym-orcin.vercel.app/)
+## [Fitness Routine Tracker](https://vue-app-gym-orcin.vercel.app/)
 This is a Vue.js application that allows you to track your fitness routines by adding exercises with descriptions, intensity levels, and durations. You can also filter your routines by intensity and duration for easier management.
 
 ## Features
